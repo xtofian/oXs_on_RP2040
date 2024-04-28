@@ -231,7 +231,7 @@ void processCmd(){
         printf("                            FVN                      idem with negatieve values\n")  ;
         printf("                            PWM                 Display the current PWM values (in micro sec)\n");
         printf("\n");
-        printf("To get the current config, just press Enter; to save it in flash, send SAVE; to get list of commands send ""?""\n");
+        printf("To get the current config, just press Enter or use command CFG; to save it in flash, send SAVE; to get list of commands send ""?""\n");
         printf("   Note: some changes require a reset to be applied (e.g. to unlock I2C bus)\n");
         isPrinting = false;
         return;  
@@ -256,6 +256,13 @@ void processCmd(){
     if (pkey) printf("  %s", pkey);
     if (pvalue) printf("=%s", pvalue);
     printf("\n");
+
+    // print current config
+    if ( strcmp("CFG", pkey) == 0 ) {
+        printConfigAndSequencers();
+        return;
+    }
+
     
     // change PRI pin
     if ( strcmp("PRI", pkey) == 0 ) { 
