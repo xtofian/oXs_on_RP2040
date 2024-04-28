@@ -433,30 +433,33 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
             sent2Core0(LATITUDE, _buffer.posllh.latitude);            // in degree with 7 decimals
             sent2Core0(ALTITUDE, _buffer.posllh.altitude_msl / 10);       //alt in mm in converted in cm (sport uses cm)
             //printf("POSLLH alt_msl  alt_ellipsoid = %d  %d\n", _buffer.posllh.altitude_msl / 10 , _buffer.posllh.altitude_ellipsoid /10);
-            if ( GPS_home_lat == 0 ) { 
+            if ( !GPS_home_position_valid && (GPS_pdop < GPS_HOME_POS_PDOP_THRESHOLD)) { 
               GPS_home_lat = _buffer.posllh.latitude ;  // save home position
               GPS_home_lon = _buffer.posllh.longitude ;
               GPS_last_lat = _buffer.posllh.latitude ;  // use dto calculate the cumulative distance
               GPS_last_lon = _buffer.posllh.longitude ;
               GPS_cumulativeDistCm =  0; 
               GPS_scale = cosf(GPS_home_lat * 1.0e-7f * DEG_TO_RAD_FOR_GPS); // calculate scale factor based on latitude
+              GPS_home_position_valid = true;
             }
-            // Calculate distance
-            sent2Core0(GPS_HOME_DISTANCE, 0.01 * GpsDistanceCm(GPS_home_lat - _buffer.posllh.latitude , GPS_home_lon - _buffer.posllh.longitude ));
-             // calculate bearing
-            int32_t off_x = _buffer.posllh.longitude - GPS_home_lon ;
-            int32_t off_y = (_buffer.posllh.latitude - GPS_home_lat) / GPS_scale ;
-            GPS_bearing = 90 + atan2f(-off_y, off_x) * 57.2957795f;  // in degree
-            if (GPS_bearing < 0) GPS_bearing += 360;
-            sent2Core0(GPS_HOME_BEARING, (int32_t) GPS_bearing);
-            // calculate cumulative flow
-            int32_t deltaDistanceCm = GpsDistanceCm(GPS_last_lat - _buffer.posllh.latitude , GPS_last_lon - _buffer.posllh.longitude );
-            if (deltaDistanceCm > 200 && deltaDistanceCm < 100000){
-                GPS_cumulativeDistCm += deltaDistanceCm;
-                GPS_last_lat = _buffer.posllh.latitude;
-                GPS_last_lon = _buffer.posllh.longitude;
+            if (GPS_home_position_valid) {
+                // Calculate distance
+                sent2Core0(GPS_HOME_DISTANCE, 0.01 * GpsDistanceCm(GPS_home_lat - _buffer.posllh.latitude , GPS_home_lon - _buffer.posllh.longitude ));
+                // calculate bearing
+                int32_t off_x = _buffer.posllh.longitude - GPS_home_lon ;
+                int32_t off_y = (_buffer.posllh.latitude - GPS_home_lat) / GPS_scale ;
+                GPS_bearing = 90 + atan2f(-off_y, off_x) * 57.2957795f;  // in degree
+                if (GPS_bearing < 0) GPS_bearing += 360;
+                sent2Core0(GPS_HOME_BEARING, (int32_t) GPS_bearing);
+                // calculate cumulative flow
+                int32_t deltaDistanceCm = GpsDistanceCm(GPS_last_lat - _buffer.posllh.latitude , GPS_last_lon - _buffer.posllh.longitude );
+                if (deltaDistanceCm > 200 && deltaDistanceCm < 100000){
+                    GPS_cumulativeDistCm += deltaDistanceCm;
+                    GPS_last_lat = _buffer.posllh.latitude;
+                    GPS_last_lon = _buffer.posllh.longitude;
+                }
+                sent2Core0(GPS_CUMUL_DIST, GPS_cumulativeDistCm * 0.01) ;  // store in m
             }
-            sent2Core0(GPS_CUMUL_DIST, GPS_cumulativeDistCm * 0.01) ;  // store in m
             // store data used for LORA
             GPS_last_fix_millis = millisRp() ;  // used by lora locator
             GPS_last_fix_lon = _buffer.posllh.longitude ;      // used by lora locator
@@ -485,6 +488,8 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
         if ( _buffer.solution.fix_status & NAV_STATUS_FIX_VALID) { // PDOP is valid only when bit 0 =1  
             GPS_pdop = _buffer.solution.position_DOP;
             sent2Core0(GPS_PDOP, _buffer.solution.position_DOP);
+        } else {
+            GPS_pdop = 9999;
         }
         //printf("nbr sat : %X \n", GPS_numSat) ; 
         break;
@@ -500,7 +505,10 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
         if ( _buffer.pvt.fix_status & NAV_STATUS_FIX_VALID) { // PDOP is valid only when bit 0 =1  
             GPS_pdop = _buffer.pvt.position_DOP;
             sent2Core0(GPS_PDOP, _buffer.pvt.position_DOP);
+        } else {
+            GPS_pdop = 9999;
         }
+
         //if (_buffer.timeutc.flag & 0b111) {
         if (( _buffer.pvt.valid & 0x03) == 0X03 ){ // if date and time are valid (bit 0 and 1 = HIGH)
             //printf("nbr sat : %X \n", GPS_numSat) ;
