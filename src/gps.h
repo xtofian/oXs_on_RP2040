@@ -237,6 +237,7 @@ public:
     int16_t GPS_bearing ;          // bearing from home in degrees
 
     bool GPS_fix = false ; // true if gps data are available.
+    bool GPS_home_position_valid = false ; // true if GPS home position has been acquired.
     bool new_position = false ;
     bool new_speed = false ;
       

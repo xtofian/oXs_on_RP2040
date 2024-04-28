@@ -158,6 +158,9 @@
 #define GPS_REFRESH_RATE 10 // For Ublox GPS, it is possible to select a refresh rate of 1Hz, 5Hz (defeult) or 10Hz 
 //                        note :a casic gps has to be configured before use in order to generate only NAV-PV messages at 38400 bauds
 //                        this can be done using a FTDI and program GnssToolkit3.exe (to download from internet)
+#define GPS_HOME_POS_PDOP_THRESHOLD 230 // GPS-reported PDOP must drop below this threshold before home position is acquired.
+//                        Note that PDOP values reported by GPS are scaled by a factor of 100.
+//                        (Ublox GPS only; the CASIC GPS driver does not collect PDOP)
 
 // --------- Parameter for RPM -------------------
 #define RPM_COUNTER_INTERVAL_USEC 100000 // in usec (so 100000 = 100 msec)
