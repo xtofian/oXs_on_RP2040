@@ -483,8 +483,8 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
         if (!next_fix)
              GPS_fix = false;
         //fields[NUMSAT].available = true;
-        if ( _buffer.solution.fix_type == FIX_3D ) _buffer.solution.satellites += 100; // we add 100 when we have a 3d fix (for Ublox)
         sent2Core0(NUMSAT, _buffer.solution.satellites); 
+        sent2Core0(GPS_STATUS, makeGPSStatField(_buffer.solution.fix_status & NAV_STATUS_FIX_VALID, GPS_home_position_valid, _buffer.solution.fix_type)); 
         if ( _buffer.solution.fix_status & NAV_STATUS_FIX_VALID) { // PDOP is valid only when bit 0 =1  
             GPS_pdop = _buffer.solution.position_DOP;
             sent2Core0(GPS_PDOP, _buffer.solution.position_DOP);
@@ -500,8 +500,8 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
              GPS_fix = false;
         //fields[NUMSAT].value = _buffer.pvt.satellites; 
         //fields[NUMSAT].available = true;
-        if ( _buffer.pvt.fix_type == FIX_3D ) _buffer.pvt.satellites += 100; // we add 100 when we have a 3d fix (for Ublox)
         sent2Core0(NUMSAT, _buffer.pvt.satellites); 
+        sent2Core0(GPS_STATUS, makeGPSStatField(_buffer.pvt.fix_status & NAV_STATUS_FIX_VALID, GPS_home_position_valid, _buffer.pvt.fix_type)); 
         if ( _buffer.pvt.fix_status & NAV_STATUS_FIX_VALID) { // PDOP is valid only when bit 0 =1  
             GPS_pdop = _buffer.pvt.position_DOP;
             sent2Core0(GPS_PDOP, _buffer.pvt.position_DOP);
@@ -563,6 +563,14 @@ bool GPS::parseGpsUblox(void) // move the data from buffer to the different fiel
         return true;
     }
     return false;
+}
+
+int32_t GPS::makeGPSStatField(bool fix_valid, bool home_pos_valid, uint8_t fix_type) {
+    int32_t flags = 0;
+    flags += (uint8_t) fix_valid;
+    flags += ((uint8_t) home_pos_valid) << 1;
+    flags += (fix_type << 2);
+    return flags;
 }
 
 /*

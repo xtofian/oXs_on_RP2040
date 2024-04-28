@@ -66,7 +66,7 @@ enum fieldIdx {     // Internal Id for the measurements stored in oXs and that c
       RESERVE4,     // currently never filled and transmitted 
       RESERVE5,     // currently never filled and transmitted 
       RESERVE6,     // currently never filled and transmitted 
-      RESERVE7,     // currently never filled and transmitted 
+      GPS_STATUS,     // GPS Status flags 
 
       NUMBER_MAX_IDX, // used to count the number of entries       
 };

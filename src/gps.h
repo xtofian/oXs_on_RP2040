@@ -257,6 +257,8 @@ public:
     bool parseGpsUblox(void) ;
     bool parseGpsCasic(void) ;
 
+    int32_t makeGPSStatField(bool fix_valid, bool home_pos_valid, uint8_t fix_type);
+
     int32_t GpsDistanceCm(int32_t deltaLat , int32_t deltaLon);
 
 private:

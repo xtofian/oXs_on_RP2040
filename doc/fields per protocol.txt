@@ -21,13 +21,14 @@ GPS speed  cm/sec            Same as above                                 GPS g
 GPS course 0.01 degree       Same as above                                 GPS heading (0X840)       0.01 degree
 GPS Alt    cm                Same as above; = alt above see level          GPAS Alt (0X820)          cm
                              Note : some handsets calculate a relative alt
-GPS number of satelites      Same as above (+100 when 3D fix)              DIY (0X5100)              unit (+100)
+GPS number of satelites      Same as above                                 DIY (0X5100)              unit
 GPS date   YYMMDD0xFF        Same as above                                 GPS date (0X850)         special format 
 GPS time   HHMMSS0x00        Same as above                                 GPS time (0X850)         special format 
 GPS PDOP   0.01  ????        Same as above                                 GPS PDOP (0X5101)         0.01 
 GPS bearing from home degree Same as above                                 DIY (5102)                degree
 GPS distance from home  m    Same as above                                 DIY (5103)                m
 GPS cumulative distance m    Same as above                                 DIY (5104)                m
+GPS Status flags             Same as above                                 DIY (5105)                [1]
 RPM        ?????             RPM pin is defined                            RPM (0X0500)              ????  
 Ads1115    0.001V (4X2)      1 or 2 Ads1115 installed +SCL/SDA defined     DIY (0X5131 / 0X5138)    mVolt
 Pitch      0.01 degree       MP6050 is installed (and SCL/SDA defined)     DIY (0X5120)             0.01 degree
@@ -40,6 +41,10 @@ Acc X     0.001g             MP6050 is installed (and SCL/SDA defined)     AccX 
 Acc Y     0.001g             MP6050 is installed (and SCL/SDA defined)     AccY (0710)              0.001g
 Acc Z     0.001g             MP6050 is installed (and SCL/SDA defined)     AccZ (0720)              0.001g
 
+[1] GPS Status Flags:
+bit 0: GPS Fix Valid
+bit 1: GPS Home Location Acquired
+bit 2-5: GPS Fix Type (UBX-NAV-PVT): 0: None, 1: D/R, 2: 2D, 3: 3D, 4: GPS+D/R, 5: Time.
 
 ******************************************************************************************************************
 **                                       ELRS/CRSF protocol                                                     **

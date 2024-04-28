@@ -1966,8 +1966,11 @@ void printFieldValues(){
                 case RESERVE6:
                     printf("Reserve 6 = %d\n", (int) fields[i].value) ;
                     break;
-                case RESERVE7:
-                    printf("Reserve 7 = %d\n", (int) fields[i].value) ;
+                case GPS_STATUS:
+                    printf("GPS Status = 0x%x\n", (fields[i].value));
+                    printf("  Fix valid = %d\n", (fields[i].value) & 1);
+                    printf("  HomePos valid = %d\n", (fields[i].value) & 2);
+                    printf("  Fix type = %d\n", (fields[i].value) >> 2);
                     break;
                             
             } // end switch

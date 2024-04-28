@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#define VERSION "2.12.0"
+#define VERSION "2.12.0-X"
 
 //#define DEBUG  // force the MCU to wait for some time for the USB connection; still continue if not connected
 
@@ -48,6 +48,7 @@
 #define P_GPS_DATE            200
 #define P_GPS_TIME            200
 #define P_GPS_PDOP            200
+#define P_GPS_STATUS          200
 #define P_GPS_HOME_BEARING     80
 #define P_GPS_HOME_DISTANCE    80
 #define P_MVOLT                80
@@ -83,7 +84,6 @@
 #define P_RESERVE4            200
 #define P_RESERVE5            200
 #define P_RESERVE6            200
-#define P_RESERVE7            200
 
 
 // -------------- for ELRS protocol  ------------------------------

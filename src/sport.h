@@ -141,6 +141,7 @@ void calculateSportMaxBandwidth();
 #define DIY_GPS_HOME_BEARING   0X5102
 #define DIY_GPS_HOME_DISTANCE  0X5103
 #define DIY_GPS_CUMUL_DISTANCE  0X5104
+#define DIY_GPS_STATUS          0X5105
 
 #define DIY_VOLT3              0X5113
 #define DIY_VOLT4              0X5114
@@ -166,4 +167,3 @@ void calculateSportMaxBandwidth();
 #define DIY_RESERVE4            0X5144
 #define DIY_RESERVE5            0X5145
 #define DIY_RESERVE6            0X5146
-#define DIY_RESERVE7            0X5147

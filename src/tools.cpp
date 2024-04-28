@@ -248,7 +248,7 @@ int32_t posFieldValues[] = {
     56789,
     67800,
     78901,
-    89012
+    3 * 4 + 3
 
 };
 
@@ -304,7 +304,7 @@ int32_t negFieldValues[] = {
     -56789,
     -67800,
     -78901,
-    -89012
+    0
         
 };
 // fill all fields with dummy values (useful to test a protocol)

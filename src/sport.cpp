@@ -127,7 +127,7 @@ void setupSportList(){     // table used by sport
         RESERVE4,
         RESERVE5,
         RESERVE6,
-        RESERVE7,
+        GPS_STATUS, // GPS Status                                        200
     };
     for (uint8_t i = 0; i < NUMBER_MAX_IDX ; i++){
         sportPriority[i]= temp[i];
@@ -178,7 +178,7 @@ void setupSportList(){     // table used by sport
     sportFieldId[RESERVE4] = DIY_RESERVE4;
     sportFieldId[RESERVE5] = DIY_RESERVE5;
     sportFieldId[RESERVE6] = DIY_RESERVE6;
-    sportFieldId[RESERVE7] = DIY_RESERVE7;
+    sportFieldId[GPS_STATUS] = DIY_GPS_STATUS;
      
 /*
     sportMaxPooling[LATITUDE] = 50;
@@ -560,7 +560,7 @@ void calculateSportMaxBandwidth(){
     sportMaxPooling[RESERVE4] = P_RESERVE4 ;
     sportMaxPooling[RESERVE5] = P_RESERVE5 ;
     sportMaxPooling[RESERVE6] = P_RESERVE6 ;
-    sportMaxPooling[RESERVE7] = P_RESERVE7 ;
+    sportMaxPooling[GPS_STATUS] = P_GPS_STATUS ;
       
     // sum of inverted values only when field is used
     sportMaxBandwidth = 0;
