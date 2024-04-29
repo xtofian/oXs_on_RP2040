@@ -200,13 +200,13 @@ int32_t posFieldValues[] = {
     891234567L, //  LATITUDE ,  //  GPS special format
     1781234567L, //  LONGITUDE =     //  GPS special format
     2468,        //GROUNDSPEED =  //  GPS cm/s
-    17912,      //  HEADING =,      //  GPS 0.01 degree
+    23412,      //  HEADING =,      //  GPS 0.01 degree
     135721,     //  ALTITUDE ,    //  GPS cm
     23,         //  NUMSAT ,      //  5 GPS no unit   
     0X170410FF,  //  GPS_DATE ,    // GPS special format AAMMJJFF
     0X22133100,  //  GPS_TIME ,    // GPS special format HHMMSS00
     123,         //  GPS_PDOP ,    // GPS no unit
-    179,         //  GPS_HOME_BEARING, // GPS degree
+    194,         //  GPS_HOME_BEARING, // GPS degree
 
     234,         //  GPS_HOME_DISTANCE, // 10 GPS  in m
     7321,       //  MVOLT,        // volt1   in mVolt
@@ -218,11 +218,11 @@ int32_t posFieldValues[] = {
     136,        //  TEMP1,       // = Volt3 but saved as temp in degree
     148,        //  TEMP2,       // = Volt4 but saved as temp in degree
     258,        //  VSPEED,      // baro       in cm/s
-    246821,     //  RELATIVEALT , // baro      in cm
+    23456,     //  RELATIVEALT , // baro      in cm
       
-    89,         //  PITCH,       // 20 imu        in degree 
-    78,         //  ROLL,        // imu           in degree
-    67,         //  YAW ,        // not used to save data  in degree
+    1234,        //  PITCH,       // 20 imu        in 0.01 degree 
+    2345,         //  ROLL,        // imu           in 0.01 degree
+    4567,         //  YAW ,        // not used to save data  in degree
     369,        //  RPM ,        // RPM sensor    in Herzt
     11111,      //    ADS_1_1,      // Voltage provided by ads1115 nr 1 on pin 1
 
@@ -234,12 +234,12 @@ int32_t posFieldValues[] = {
       
     23232,      //  ADS_2_3,      // Voltage provided by ads1115 nr 2 on pin 3    30
     24242,      //  ADS_2_4,      // Voltage provided by ads1115 nr 2 on pin 4
-    15151,      //  AIRSPEED,    cm/s
+    1851,      //  AIRSPEED,    cm/s
     167,         //     AIRSPEED_COMPENSATED_VSPEED,
     98,         //  SBUS_HOLD_COUNTER,
     
     12,          //  SBUS_FAILSAFE_COUNTER,
-    135791,       // GPS cumulative dist in m
+    13579,       // GPS cumulative dist in m
     2468,         // ACC_X in 0.001G
     3579,         // ACC_Y
     1478,          // Acc_Z
